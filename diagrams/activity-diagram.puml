@@ -1,0 +1,89 @@
+@startuml
+|User|
+start
+:Open Restaurant Finder App;
+:Enter Search Criteria;
+:Click Search Button;
+
+|System|
+:Process Search Query;
+:Query Restaurant Database;
+
+if (Results Found?) then (yes)
+  :Display Restaurant List;
+  
+  |User|
+  :Select a Restaurant;
+  
+  |System|
+  :Retrieve Restaurant Details;
+  :Check Current Time;
+  :Determine Open/Closed Status;
+  :Display Restaurant Details\nwith Operating Hours;
+  
+  |User|
+  if (View Menu?) then (yes)
+    
+    |System|
+    :Retrieve Menu Items;
+    :Display Menu with Prices;
+    
+    |User|
+    repeat
+      :Browse Menu Items;
+      if (Add Item?) then (yes)
+        :Select Item;
+        :Add to Cart;
+        
+        |System|
+        :Update Cart;
+        :Calculate Running Total;
+        :Display Updated Amount;
+      else (no)
+        if (Remove Item?) then (yes)
+          :Select Item to Remove;
+          
+          |System|
+          :Remove from Cart;
+          :Recalculate Total;
+          :Display Updated Amount;
+        endif
+      endif
+      
+      |User|
+    repeat while (Continue Shopping?) is (yes)
+    
+    :View Final Cart Summary;
+    :View Total Amount;
+    
+    if (Start New Search?) then (yes)
+      :Navigate Back to Search;
+    else (no)
+      stop
+    endif
+    
+  else (no)
+    if (View Another Restaurant?) then (yes)
+      :Navigate Back to Results;
+    else (no)
+      if (New Search?) then (yes)
+        :Navigate Back to Search;
+      else (no)
+        stop
+      endif
+    endif
+  endif
+  
+else (no)
+  |System|
+  :Display "No Results Found" Error;
+  
+  |User|
+  if (Retry Search?) then (yes)
+    :Modify Search Criteria;
+  else (no)
+    stop
+  endif
+endif
+
+@enduml
