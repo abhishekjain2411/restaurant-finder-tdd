@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "User" as user
+
+rectangle "Restaurant Finder System" {
+  
+  package "Search Module" {
+    usecase "Search Restaurants" as UC1
+    usecase "View Search Results" as UC2
+    usecase "Handle No Results" as UC3
+  }
+  
+  package "Restaurant Details Module" {
+    usecase "View Restaurant Details" as UC4
+    usecase "Check Opening Status" as UC5
+    usecase "View Operating Hours" as UC6
+  }
+  
+  package "Menu Management Module" {
+    usecase "View Menu" as UC7
+    usecase "Browse Menu Items" as UC8
+    usecase "View Item Prices" as UC9
+  }
+  
+  package "Cart Module" {
+    usecase "Add Items to Cart" as UC10
+    usecase "Remove Items from Cart" as UC11
+    usecase "Calculate Total Amount" as UC12
+    usecase "View Cart Summary" as UC13
+  }
+  
+  package "Navigation Module" {
+    usecase "Navigate Back to Search" as UC14
+    usecase "Reset Search" as UC15
+  }
+}
+
+user --> UC1
+user --> UC2
+user --> UC4
+user --> UC7
+user --> UC10
+user --> UC11
+user --> UC13
+user --> UC14
+user --> UC15
+
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC3 : <<extend>>
+UC2 ..> UC4 : <<include>>
+UC4 ..> UC5 : <<include>>
+UC4 ..> UC6 : <<include>>
+UC4 ..> UC7 : <<extend>>
+UC7 ..> UC8 : <<include>>
+UC8 ..> UC9 : <<include>>
+UC10 ..> UC12 : <<include>>
+UC11 ..> UC12 : <<include>>
+UC12 ..> UC13 : <<include>>
+
+@enduml
